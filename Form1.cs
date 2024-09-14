@@ -319,5 +319,31 @@ namespace SubconverterTools
         {
             AntdUI.Notification.warn(this, "温馨提示", "作者不对本软件的稳定性负责，本软件所提供的服务器来源于网络，建议自己搭建后端服务器!", AntdUI.TAlignFrom.TR, Font);
         }
+
+        private void button_qrcodeSubUrl_Click(object sender, EventArgs e)
+        {
+            if (input_subUrl.Text == string.Empty) {
+                AntdUI.Message.warn(this, "请先生成订阅链接再查看二维码", Font);
+                return;
+            }
+            Bitmap qr = QRCode.GenerateQRCode(input_subUrl.Text);
+            if (qr != null) {
+                AntdUI.Preview.open(new AntdUI.Preview.Config(this, qr));
+            }
+        }
+
+        private void button_qrcodeShortUrl_Click(object sender, EventArgs e)
+        {
+            if (input_shortSubUrl.Text == string.Empty)
+            {
+                AntdUI.Message.warn(this, "请先生成短链接再查看二维码", Font);
+                return;
+            }
+            Bitmap qr = QRCode.GenerateQRCode(input_shortSubUrl.Text);
+            if (qr != null)
+            {
+                AntdUI.Preview.open(new AntdUI.Preview.Config(this, qr));
+            }
+        }
     }
 }
