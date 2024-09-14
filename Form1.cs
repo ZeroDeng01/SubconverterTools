@@ -10,7 +10,7 @@ namespace SubconverterTools
     public partial class Form1 : AntdUI.Window
     {
         /// <summary>
-        /// ¶¨ÖÆ¶©ÔÄÁ¬½Ó
+        /// å®šåˆ¶è®¢é˜…è¿æ¥
         /// </summary>
         private string customSubUrl = string.Empty;
         public Form1()
@@ -33,39 +33,39 @@ namespace SubconverterTools
                 return;
             }
 
-            #region ²ÎÊı¹¹Ôì
+            #region å‚æ•°æ„é€ 
             var sourceSub = input_sourceSubUrl.Text;
-            sourceSub = Regex.Replace(sourceSub, @"(\n|\r|\r\n)", "|");//¶©ÔÄÁ¬½Ó
-            customSubUrl = select_customBackend.SelectedValue + //Ìí¼Óºó¶Ë·şÎñÆ÷
-                "target=" + select_clientType.SelectedValue +  //Ìí¼Ó¿Í»§¶ËÀàĞÍ
+            sourceSub = Regex.Replace(sourceSub, @"(\n|\r|\r\n)", "|");//è®¢é˜…è¿æ¥
+            customSubUrl = select_customBackend.SelectedValue + //æ·»åŠ åç«¯æœåŠ¡å™¨
+                "target=" + select_clientType.SelectedValue +  //æ·»åŠ å®¢æˆ·ç«¯ç±»å‹
                 "&url=" + Uri.EscapeDataString(sourceSub);
 
-            // Ô¶³ÌÅäÖÃ
+            // è¿œç¨‹é…ç½®
             if (select_remoteConfig.SelectedIndex > -1)
             {
                 customSubUrl +=
                     "&config=" + Uri.EscapeDataString(select_remoteConfig.SelectedValue.ToString());
             }
-            // ÅÅ³ı½Úµã
+            // æ’é™¤èŠ‚ç‚¹
             if (input_excludeRemarks.Text.Length > 0)
             {
                 customSubUrl +=
                   "&exclude=" + Uri.EscapeDataString(input_excludeRemarks.Text);
             }
-            // °üº¬½Úµã
+            // åŒ…å«èŠ‚ç‚¹
             if (input_includeRemarks.Text.Length > 0)
             {
                 customSubUrl +=
                   "&include=" + Uri.EscapeDataString(input_includeRemarks.Text);
             }
-            // ÎÄ¼şÃû³Æ
+            // æ–‡ä»¶åç§°
             if (input_filename.Text.Length > 0)
             {
                 customSubUrl +=
                   "&filename=" + Uri.EscapeDataString(input_filename.Text);
             }
 
-            // check boolÀàĞÍÅäÖÃ
+            // check boolç±»å‹é…ç½®
             customSubUrl +=
             "&append_type=" + checkbox_appendType.Checked +
             "&emoji=" + checkbox_emoji.Checked +
@@ -87,15 +87,15 @@ namespace SubconverterTools
             }
             input_subUrl.Text = customSubUrl;
 
-            AntdUI.Modal.open(new AntdUI.Modal.Config(this, "¶©ÔÄÁ¬½ÓÉú³É³É¹¦", customSubUrl.Substring(0, 100) + "........." + customSubUrl.Substring(customSubUrl.Length - 100), AntdUI.TType.Success)
+            AntdUI.Modal.open(new AntdUI.Modal.Config(this, "è®¢é˜…è¿æ¥ç”ŸæˆæˆåŠŸ", customSubUrl.Substring(0, 100) + "........." + customSubUrl.Substring(customSubUrl.Length - 100), AntdUI.TType.Success)
             {
-                Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "¸´ÖÆÁ¬½Ó", AntdUI.TTypeMini.Success) },
+                Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "å¤åˆ¶è¿æ¥", AntdUI.TTypeMini.Success) },
                 OnBtns = btn =>
                 {
                     Copy(customSubUrl);
                 },
                 CancelText = null,
-                OkText = "ÖªµÀÁË"
+                OkText = "çŸ¥é“äº†"
             });
             #endregion
 
@@ -103,7 +103,7 @@ namespace SubconverterTools
         }
 
         /// <summary>
-        /// ²ÎÊıÑéÖ¤
+        /// å‚æ•°éªŒè¯
         /// </summary>
         /// <returns></returns>
         private Boolean verify()
@@ -116,29 +116,29 @@ namespace SubconverterTools
 
             if (input_sourceSubUrl.Text.Trim() == string.Empty)
             {
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "²ÎÊı²»ÍêÕû", "¶©ÔÄ/´úÀíÁ¬½Ó±ØÌî", AntdUI.TType.Warn)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "å‚æ•°ä¸å®Œæ•´", "è®¢é˜…/ä»£ç†è¿æ¥å¿…å¡«", AntdUI.TType.Warn)
                 {
                     CancelText = null,
-                    OkText = "ÖªµÀÁË"
+                    OkText = "çŸ¥é“äº†"
                 });
                 return false;
             }
             if (select_clientType.SelectedIndex < 0)
             {
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "²ÎÊı²»ÍêÕû", "¿Í»§¶ËÀàĞÍ±ØÌî", AntdUI.TType.Warn)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "å‚æ•°ä¸å®Œæ•´", "å®¢æˆ·ç«¯ç±»å‹å¿…å¡«", AntdUI.TType.Warn)
                 {
                     CancelText = null,
-                    OkText = "ÖªµÀÁË"
+                    OkText = "çŸ¥é“äº†"
                 });
                 return false;
             }
 
             if (select_customBackend.SelectedIndex < 0)
             {
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "²ÎÊı²»ÍêÕû", "ºó¶Ë·şÎñÆ÷±ØÌî", AntdUI.TType.Warn)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "å‚æ•°ä¸å®Œæ•´", "åç«¯æœåŠ¡å™¨å¿…å¡«", AntdUI.TType.Warn)
                 {
                     CancelText = null,
-                    OkText = "ÖªµÀÁË"
+                    OkText = "çŸ¥é“äº†"
                 });
                 return false;
             }
@@ -146,13 +146,13 @@ namespace SubconverterTools
         }
 
         /// <summary>
-        /// ÄÚÈİ¸´ÖÆ
+        /// å†…å®¹å¤åˆ¶
         /// </summary>
         /// <param name="text"></param>
         private void Copy(string text)
         {
             Clipboard.SetText(text);
-            AntdUI.Message.success(this, "¸´ÖÆ³É¹¦", Font);
+            AntdUI.Message.success(this, "å¤åˆ¶æˆåŠŸ", Font);
         }
         private void button_copySubUrl_Click(object sender, EventArgs e)
         {
@@ -178,10 +178,10 @@ namespace SubconverterTools
             {
                 if (input_subUrl.Text == string.Empty)
                 {
-                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "¶ÌÁ´½ÓÉú³ÉÊ§°Ü", "¶©ÔÄÁ´½Ó»¹Î´Éú³É£¬ÇëÏÈÉú³É¶©ÔÄÁ´½Ó", AntdUI.TType.Warn)
+                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "çŸ­é“¾æ¥ç”Ÿæˆå¤±è´¥", "è®¢é˜…é“¾æ¥è¿˜æœªç”Ÿæˆï¼Œè¯·å…ˆç”Ÿæˆè®¢é˜…é“¾æ¥", AntdUI.TType.Warn)
                     {
                         CancelText = null,
-                        OkText = "ÖªµÀÁË"
+                        OkText = "çŸ¥é“äº†"
                     });
                     return;
                 }
@@ -191,43 +191,43 @@ namespace SubconverterTools
                 if (shortUrl != null)
                 {
                     input_shortSubUrl.Text = shortUrl;
-                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "¶ÌÁ´½ÓÉú³É³É¹¦", shortUrl, AntdUI.TType.Success)
+                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "çŸ­é“¾æ¥ç”ŸæˆæˆåŠŸ", shortUrl, AntdUI.TType.Success)
                     {
-                        Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "¸´ÖÆÁ¬½Ó", AntdUI.TTypeMini.Success) },
+                        Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "å¤åˆ¶è¿æ¥", AntdUI.TTypeMini.Success) },
                         OnBtns = btn =>
                         {
                             Copy(shortUrl);
                         },
                         CancelText = null,
-                        OkText = "ÖªµÀÁË"
+                        OkText = "çŸ¥é“äº†"
                     });
                 }
                 else
                 {
-                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "¶ÌÁ´½ÓÉú³ÉÊ§°Ü", $"¶ÌÁ´½ÓÉú³ÉÊ§°Ü£¬ÇëÖØĞÂ³¢ÊÔ£¡»òÕß×ÔĞĞÇ°Íù{ShortURL.requestUrl}½øĞĞÊÖ¶¯Éú³É", AntdUI.TType.Error)
+                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "çŸ­é“¾æ¥ç”Ÿæˆå¤±è´¥", $"çŸ­é“¾æ¥ç”Ÿæˆå¤±è´¥ï¼Œè¯·é‡æ–°å°è¯•ï¼æˆ–è€…è‡ªè¡Œå‰å¾€{ShortURL.requestUrl}è¿›è¡Œæ‰‹åŠ¨ç”Ÿæˆ", AntdUI.TType.Error)
                     {
-                        Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "¸´ÖÆÁ¬½Ó", AntdUI.TTypeMini.Success) },
+                        Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "å¤åˆ¶è¿æ¥", AntdUI.TTypeMini.Success) },
                         OnBtns = btn =>
                         {
                             Copy(ShortURL.requestUrl);
                         },
                         CancelText = null,
-                        OkText = "ÖªµÀÁË"
+                        OkText = "çŸ¥é“äº†"
                     });
                     return;
                 }
             }
             catch (Exception ex)
             {
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "¶ÌÁ´½ÓÉú³ÉÊ§°Ü", $"¶ÌÁ´½ÓÉú³ÉÊ§°Ü£¬ÇëÖØĞÂ³¢ÊÔ£¡»òÕß×ÔĞĞÇ°Íù{Utils.ShortURL.requestUrl}½øĞĞÊÖ¶¯Éú³É", AntdUI.TType.Error)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "çŸ­é“¾æ¥ç”Ÿæˆå¤±è´¥", $"çŸ­é“¾æ¥ç”Ÿæˆå¤±è´¥ï¼Œè¯·é‡æ–°å°è¯•ï¼æˆ–è€…è‡ªè¡Œå‰å¾€{Utils.ShortURL.requestUrl}è¿›è¡Œæ‰‹åŠ¨ç”Ÿæˆ", AntdUI.TType.Error)
                 {
-                    Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "¸´ÖÆÁ¬½Ó", AntdUI.TTypeMini.Success) },
+                    Btns = new AntdUI.Modal.Btn[] { new AntdUI.Modal.Btn("copy", "å¤åˆ¶è¿æ¥", AntdUI.TTypeMini.Success) },
                     OnBtns = btn =>
                     {
                         Copy(ShortURL.requestUrl);
                     },
                     CancelText = null,
-                    OkText = "ÖªµÀÁË"
+                    OkText = "çŸ¥é“äº†"
                 });
             }
             finally
@@ -239,9 +239,9 @@ namespace SubconverterTools
 
         private async void select_customBackend_SelectedValueChanged(object sender, ObjectNEventArgs e)
         {
-            label_backendVersion.Text = "»ñÈ¡ºó¶Ë°æ±¾ÖĞ...";
+            label_backendVersion.Text = "è·å–åç«¯ç‰ˆæœ¬ä¸­...";
             string version = await BackendVersion.GetVersionAsync(select_customBackend.SelectedValue.ToString());
-            label_backendVersion.Text = version == string.Empty ? "»ñÈ¡ºó¶Ë°æ±¾Ê§°Ü" : "ºó¶Ë°æ±¾£º" + version;
+            label_backendVersion.Text = version == string.Empty ? "è·å–åç«¯ç‰ˆæœ¬å¤±è´¥" : "åç«¯ç‰ˆæœ¬ï¼š" + version;
         }
 
         private void button_parseUrl_Click(object sender, EventArgs e)
@@ -249,10 +249,10 @@ namespace SubconverterTools
 
             if (input_parseUrl.Text.Trim() == string.Empty)
             {
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "²ÎÊı²»ÍêÕû", "ÇëÌîĞ´´ı½âÎöURL", AntdUI.TType.Warn)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "å‚æ•°ä¸å®Œæ•´", "è¯·å¡«å†™å¾…è§£æURL", AntdUI.TType.Warn)
                 {
                     CancelText = null,
-                    OkText = "ÖªµÀÁË"
+                    OkText = "çŸ¥é“äº†"
                 });
                 return;
             }
@@ -260,19 +260,19 @@ namespace SubconverterTools
             button_parseUrl.Loading = true;
             var inputUrl = input_parseUrl.Text;
 
-            // ½âÎöURL
+            // è§£æURL
             var uri = new Uri(inputUrl);
-            // ÌáÈ¡»ù´¡ URL
+            // æå–åŸºç¡€ URL
             var customBackend = uri.GetLeftPart(UriPartial.Path);
             select_customBackend.SelectedValue = customBackend + "?";
-            // ÌáÈ¡²ÎÊı
+            // æå–å‚æ•°
             var queryParams = HttpUtility.ParseQueryString(uri.Query);
 
-            // ´Ó²éÑ¯²ÎÊıÖĞ»ñÈ¡Öµ²¢¸üĞÂ¿Ø¼ş
+            // ä»æŸ¥è¯¢å‚æ•°ä¸­è·å–å€¼å¹¶æ›´æ–°æ§ä»¶
             select_clientType.SelectedValue = queryParams["target"];
             input_sourceSubUrl.Text = Uri.UnescapeDataString(queryParams["url"]);
 
-            // ½âÎö¿ÉÑ¡²ÎÊı
+            // è§£æå¯é€‰å‚æ•°
             if (queryParams["config"] != null)
             {
                 select_remoteConfig.SelectedValue = Uri.UnescapeDataString(queryParams["config"]);
@@ -281,7 +281,7 @@ namespace SubconverterTools
             input_includeRemarks.Text = Uri.UnescapeDataString(queryParams["include"] ?? string.Empty);
             input_filename.Text = Uri.UnescapeDataString(queryParams["filename"] ?? string.Empty);
 
-            // ½âÎö²¼¶ûÀàĞÍ²ÎÊı
+            // è§£æå¸ƒå°”ç±»å‹å‚æ•°
             checkbox_appendType.Checked = bool.TryParse(queryParams["append_type"], out bool appendTypeValue) && appendTypeValue;
             checkbox_emoji.Checked = bool.TryParse(queryParams["emoji"], out bool emojiValue) && emojiValue;
             checkbox_nodeList.Checked = bool.TryParse(queryParams["list"], out bool listValue) && listValue;
@@ -292,7 +292,7 @@ namespace SubconverterTools
             checkbox_sort.Checked = bool.TryParse(queryParams["sort"], out bool sortValue) && sortValue;
             checkbox_udp.Checked = bool.TryParse(queryParams["udp"], out bool udpValue) && udpValue;
 
-            // ½âÎö¶îÍâµÄDOH²ÎÊı
+            // è§£æé¢å¤–çš„DOHå‚æ•°
             checkbox_surgeDoh.Checked = queryParams["surge.doh"] == "true";
             checkbox_clashDoh.Checked = queryParams["clash.doh"] == "true";
             button_parseUrl.Loading = false;
@@ -303,7 +303,7 @@ namespace SubconverterTools
             string url = "https://github.com/ZeroDeng01/SubconverterTools";
             try
             {
-                // Ê¹ÓÃÄ¬ÈÏä¯ÀÀÆ÷´ò¿ªÖ¸¶¨ÍøÖ·
+                // ä½¿ç”¨é»˜è®¤æµè§ˆå™¨æ‰“å¼€æŒ‡å®šç½‘å€
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = url,
@@ -317,7 +317,7 @@ namespace SubconverterTools
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            AntdUI.Notification.warn(this, "ÎÂÜ°ÌáÊ¾", "×÷Õß²»¶Ô±¾Èí¼şµÄÎÈ¶¨ĞÔ¸ºÔğ£¬±¾Èí¼şËùÌá¹©µÄ·şÎñÆ÷À´Ô´ÓÚÍøÂç£¬½¨Òé×Ô¼º´î½¨ºó¶Ë·şÎñÆ÷!", AntdUI.TAlignFrom.TR, Font);
+            AntdUI.Notification.warn(this, "æ¸©é¦¨æç¤º", "ä½œè€…ä¸å¯¹æœ¬è½¯ä»¶çš„ç¨³å®šæ€§è´Ÿè´£ï¼Œæœ¬è½¯ä»¶æ‰€æä¾›çš„æœåŠ¡å™¨æ¥æºäºç½‘ç»œï¼Œå»ºè®®è‡ªå·±æ­å»ºåç«¯æœåŠ¡å™¨!", AntdUI.TAlignFrom.TR, Font);
         }
     }
 }
