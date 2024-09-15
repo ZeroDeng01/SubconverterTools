@@ -271,15 +271,15 @@
             label8.ForeColor = Color.FromArgb(60, 120, 216);
             label8.Location = new Point(14, 489);
             label8.Name = "label8";
-            label8.Size = new Size(196, 31);
+            label8.Size = new Size(270, 31);
             label8.TabIndex = 25;
-            label8.Text = "配置文件名称";
+            label8.Text = "配置文件/分组/备注名称";
             // 
             // input_filename
             // 
             input_filename.Location = new Point(14, 526);
             input_filename.Name = "input_filename";
-            input_filename.PlaceholderText = "节点名不包含的关键字，支持正则";
+            input_filename.PlaceholderText = "配置文件名称或者风阻名称或者备注名称";
             input_filename.Size = new Size(421, 46);
             input_filename.TabIndex = 26;
             // 
@@ -487,7 +487,7 @@
             // button_makeUrl
             // 
             button_makeUrl.JoinLeft = true;
-            button_makeUrl.Location = new Point(709, 724);
+            button_makeUrl.Location = new Point(708, 724);
             button_makeUrl.Name = "button_makeUrl";
             button_makeUrl.Size = new Size(96, 46);
             button_makeUrl.TabIndex = 33;
@@ -498,7 +498,7 @@
             // button_makeShortUrl
             // 
             button_makeShortUrl.JoinLeft = true;
-            button_makeShortUrl.Location = new Point(709, 813);
+            button_makeShortUrl.Location = new Point(708, 813);
             button_makeShortUrl.Name = "button_makeShortUrl";
             button_makeShortUrl.Size = new Size(96, 46);
             button_makeShortUrl.TabIndex = 34;

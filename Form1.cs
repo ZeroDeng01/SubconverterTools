@@ -72,21 +72,26 @@ namespace SubconverterTools
             // 文件名称
             if (input_filename.Text.Length > 0)
             {
-                customSubUrl +=
-                  "&filename=" + Uri.EscapeDataString(input_filename.Text);
+                customSubUrl +=(
+                  "&filename=" + Uri.EscapeDataString(input_filename.Text)
+                 +"&group="+ Uri.EscapeDataString(input_filename.Text)
+                 +"&remarks=" + Uri.EscapeDataString(input_filename.Text)
+                 );
+                    
             }
+
 
             // check bool类型配置
             customSubUrl +=
-            "&append_type=" + checkbox_appendType.Checked +
-            "&emoji=" + checkbox_emoji.Checked +
-            "&list=" + checkbox_nodeList.Checked +
-            "&tfo=" + checkbox_tfo.Checked +
-            "&scv=" + checkbox_scv.Checked +
-            "&fdn=" + checkbox_fdn.Checked +
-            "&expand=" + checkbox_expand.Checked +
-            "&sort=" + checkbox_sort.Checked +
-            "&udp=" + checkbox_udp.Checked;
+            "&append_type=" + checkbox_appendType.Checked.ToString().ToLower() +
+            "&emoji=" + checkbox_emoji.Checked.ToString().ToLower() +
+            "&list=" + checkbox_nodeList.Checked.ToString().ToLower() +
+            "&tfo=" + checkbox_tfo.Checked.ToString().ToLower() +
+            "&scv=" + checkbox_scv.Checked.ToString().ToLower() +
+            "&fdn=" + checkbox_fdn.Checked.ToString().ToLower() +
+            "&expand=" + checkbox_expand.Checked.ToString().ToLower() +
+            "&sort=" + checkbox_sort.Checked.ToString().ToLower() +
+            "&udp=" + checkbox_udp.Checked.ToString().ToLower();
 
             if (checkbox_surgeDoh.Checked)
             {
