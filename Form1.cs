@@ -1,4 +1,5 @@
 using AntdUI;
+using SubconverterTools.SubServer;
 using SubconverterTools.Utils;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -13,9 +14,17 @@ namespace SubconverterTools
         /// 定制订阅连接
         /// </summary>
         private string customSubUrl = string.Empty;
+        /// <summary>
+        /// 本地订阅后端服务
+        /// </summary>
+        private SubBackend _subBackend;
         public Form1()
         {
             InitializeComponent();
+            _subBackend = new SubBackend();
+            _subBackend.OutputDataReceived += SubBackend_OutputDataReceived;
+            _subBackend.ErrorDataReceived += SubBackend_ErrorDataReceived;
+
             select_clientType.Items.AddRange(BaseData.ClientTypes.GetItem().ToArray());
             select_clientType.SelectedIndex = 0;
             select_customBackend.Items.AddRange(BaseData.CustomBackends.GetItem().ToArray());
@@ -25,6 +34,8 @@ namespace SubconverterTools
             select_shortUrlBackend.Items.AddRange(BaseData.ShortUrlBackends.GetItem().ToArray());
             select_shortUrlBackend.SelectedIndex = 0;
         }
+
+
 
         private void button_makeUrl_Click(object sender, EventArgs e)
         {
@@ -333,6 +344,85 @@ namespace SubconverterTools
             if (qr != null)
             {
                 AntdUI.Preview.open(new AntdUI.Preview.Config(this, qr));
+            }
+        }
+
+        private async void button_subServerTest_Click(object sender, EventArgs e)
+        {
+            button_subServerTest.Loading = true;
+            string version = await BackendVersion.GetVersionAsync("http://127.0.0.1:25500/version");
+            if (version == string.Empty)
+            {
+                alert_subServerStatus.Text = "无法获取后端服务信息";
+                alert_subServerStatus.Icon = AntdUI.TType.Error;
+            }
+            else
+            {
+                alert_subServerStatus.Text = "后端链接正常！版本：" + version;
+                alert_subServerStatus.Icon = AntdUI.TType.Success;
+            }
+            button_subServerTest.Loading = false;
+        }
+
+        private void button_subServerStart_Click(object sender, EventArgs e)
+        {
+            button_subServerStart.Loading = true;
+            if (!_subBackend.IsRunning)
+            {
+                _subBackend.Start();
+                alert_subServerStatus.Text = "后端已启动";
+                alert_subServerStatus.Icon = TType.Success;
+            }
+            button_subServerStart.Loading = false;
+            AntdUI.Message.info(this, "后端启动指令已经发送", Font);
+        }
+
+        private void button_subServerStop_Click(object sender, EventArgs e)
+        {
+            button_subServerStop.Loading = true;
+            if (_subBackend.IsRunning)
+            {
+                _subBackend.Stop();
+                alert_subServerStatus.Text = "后端已停止";
+                alert_subServerStatus.Icon = TType.Warn;
+            }
+            button_subServerStop.Loading = false;
+            AntdUI.Message.info(this, "后端停止指令已经发送", Font);
+        }
+
+        /// <summary>
+        /// 后端服务错误消息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SubBackend_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("后端异常：" + e.Data);
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// 后端服务运行日志
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SubBackend_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("后端异常：" + e.Data);
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_subBackend.IsRunning)
+            {
+                _subBackend.Stop();
             }
         }
     }

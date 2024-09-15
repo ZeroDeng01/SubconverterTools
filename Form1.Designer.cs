@@ -72,6 +72,11 @@
             button_copySubUrl = new AntdUI.Button();
             button_copyShortUrl = new AntdUI.Button();
             panel3 = new AntdUI.Panel();
+            alert_subServerStatus = new AntdUI.Alert();
+            button_subServerTest = new AntdUI.Button();
+            button_subServerStart = new AntdUI.Button();
+            button_subServerStop = new AntdUI.Button();
+            label15 = new AntdUI.Label();
             alert1 = new AntdUI.Alert();
             label13 = new AntdUI.Label();
             input_parseUrl = new AntdUI.Input();
@@ -384,7 +389,7 @@
             // input_subUrl
             // 
             input_subUrl.JoinRight = true;
-            input_subUrl.Location = new Point(26, 697);
+            input_subUrl.Location = new Point(12, 724);
             input_subUrl.Name = "input_subUrl";
             input_subUrl.PlaceholderText = "";
             input_subUrl.ReadOnly = true;
@@ -453,7 +458,7 @@
             // 
             label9.Font = new Font("Microsoft YaHei UI", 10F);
             label9.ForeColor = Color.FromArgb(60, 120, 216);
-            label9.Location = new Point(27, 660);
+            label9.Location = new Point(13, 687);
             label9.Name = "label9";
             label9.Size = new Size(131, 31);
             label9.TabIndex = 30;
@@ -463,7 +468,7 @@
             // 
             label10.Font = new Font("Microsoft YaHei UI", 10F);
             label10.ForeColor = Color.FromArgb(60, 120, 216);
-            label10.Location = new Point(27, 749);
+            label10.Location = new Point(13, 776);
             label10.Name = "label10";
             label10.Size = new Size(99, 31);
             label10.TabIndex = 32;
@@ -472,7 +477,7 @@
             // input_shortSubUrl
             // 
             input_shortSubUrl.JoinRight = true;
-            input_shortSubUrl.Location = new Point(26, 786);
+            input_shortSubUrl.Location = new Point(12, 813);
             input_shortSubUrl.Name = "input_shortSubUrl";
             input_shortSubUrl.PlaceholderText = "";
             input_shortSubUrl.ReadOnly = true;
@@ -482,7 +487,7 @@
             // button_makeUrl
             // 
             button_makeUrl.JoinLeft = true;
-            button_makeUrl.Location = new Point(723, 697);
+            button_makeUrl.Location = new Point(709, 724);
             button_makeUrl.Name = "button_makeUrl";
             button_makeUrl.Size = new Size(96, 46);
             button_makeUrl.TabIndex = 33;
@@ -493,7 +498,7 @@
             // button_makeShortUrl
             // 
             button_makeShortUrl.JoinLeft = true;
-            button_makeShortUrl.Location = new Point(723, 786);
+            button_makeShortUrl.Location = new Point(709, 813);
             button_makeShortUrl.Name = "button_makeShortUrl";
             button_makeShortUrl.Size = new Size(96, 46);
             button_makeShortUrl.TabIndex = 34;
@@ -505,7 +510,7 @@
             // 
             button_copySubUrl.JoinLeft = true;
             button_copySubUrl.JoinRight = true;
-            button_copySubUrl.Location = new Point(673, 697);
+            button_copySubUrl.Location = new Point(659, 724);
             button_copySubUrl.Name = "button_copySubUrl";
             button_copySubUrl.Size = new Size(50, 46);
             button_copySubUrl.TabIndex = 35;
@@ -517,7 +522,7 @@
             // 
             button_copyShortUrl.JoinLeft = true;
             button_copyShortUrl.JoinRight = true;
-            button_copyShortUrl.Location = new Point(673, 786);
+            button_copyShortUrl.Location = new Point(659, 813);
             button_copyShortUrl.Name = "button_copyShortUrl";
             button_copyShortUrl.Size = new Size(50, 46);
             button_copyShortUrl.TabIndex = 36;
@@ -528,6 +533,11 @@
             // panel3
             // 
             panel3.BorderWidth = 1F;
+            panel3.Controls.Add(alert_subServerStatus);
+            panel3.Controls.Add(button_subServerTest);
+            panel3.Controls.Add(button_subServerStart);
+            panel3.Controls.Add(button_subServerStop);
+            panel3.Controls.Add(label15);
             panel3.Controls.Add(alert1);
             panel3.Controls.Add(label13);
             panel3.Controls.Add(input_parseUrl);
@@ -535,9 +545,64 @@
             panel3.Controls.Add(label14);
             panel3.Location = new Point(826, 660);
             panel3.Name = "panel3";
-            panel3.Size = new Size(456, 172);
+            panel3.Size = new Size(456, 267);
             panel3.TabIndex = 37;
             panel3.Text = "panel3";
+            // 
+            // alert_subServerStatus
+            // 
+            alert_subServerStatus.Font = new Font("Microsoft YaHei UI", 9F);
+            alert_subServerStatus.Icon = AntdUI.TType.Info;
+            alert_subServerStatus.Location = new Point(21, 173);
+            alert_subServerStatus.Name = "alert_subServerStatus";
+            alert_subServerStatus.Size = new Size(416, 25);
+            alert_subServerStatus.TabIndex = 42;
+            alert_subServerStatus.Text = "未获取到状态";
+            alert_subServerStatus.TextTitle = "";
+            // 
+            // button_subServerTest
+            // 
+            button_subServerTest.JoinLeft = true;
+            button_subServerTest.JoinRight = true;
+            button_subServerTest.Location = new Point(248, 204);
+            button_subServerTest.Name = "button_subServerTest";
+            button_subServerTest.Size = new Size(96, 46);
+            button_subServerTest.TabIndex = 41;
+            button_subServerTest.Text = "测试";
+            button_subServerTest.Type = AntdUI.TTypeMini.Warn;
+            button_subServerTest.Click += button_subServerTest_Click;
+            // 
+            // button_subServerStart
+            // 
+            button_subServerStart.JoinRight = true;
+            button_subServerStart.Location = new Point(152, 204);
+            button_subServerStart.Name = "button_subServerStart";
+            button_subServerStart.Size = new Size(96, 46);
+            button_subServerStart.TabIndex = 40;
+            button_subServerStart.Text = "启动";
+            button_subServerStart.Type = AntdUI.TTypeMini.Success;
+            button_subServerStart.Click += button_subServerStart_Click;
+            // 
+            // button_subServerStop
+            // 
+            button_subServerStop.JoinLeft = true;
+            button_subServerStop.Location = new Point(344, 204);
+            button_subServerStop.Name = "button_subServerStop";
+            button_subServerStop.Size = new Size(96, 46);
+            button_subServerStop.TabIndex = 39;
+            button_subServerStop.Text = "停止";
+            button_subServerStop.Type = AntdUI.TTypeMini.Error;
+            button_subServerStop.Click += button_subServerStop_Click;
+            // 
+            // label15
+            // 
+            label15.Font = new Font("Microsoft YaHei UI", 10F);
+            label15.ForeColor = Color.FromArgb(60, 120, 216);
+            label15.Location = new Point(21, 137);
+            label15.Name = "label15";
+            label15.Size = new Size(173, 31);
+            label15.TabIndex = 38;
+            label15.Text = "本地内置后端服务";
             // 
             // alert1
             // 
@@ -554,7 +619,7 @@
             // 
             label13.Font = new Font("Microsoft YaHei UI", 10F);
             label13.ForeColor = Color.FromArgb(60, 120, 216);
-            label13.Location = new Point(21, 64);
+            label13.Location = new Point(21, 56);
             label13.Name = "label13";
             label13.Size = new Size(131, 31);
             label13.TabIndex = 35;
@@ -563,7 +628,7 @@
             // input_parseUrl
             // 
             input_parseUrl.JoinRight = true;
-            input_parseUrl.Location = new Point(14, 93);
+            input_parseUrl.Location = new Point(14, 85);
             input_parseUrl.Name = "input_parseUrl";
             input_parseUrl.PlaceholderText = "请输入待解析url，不支持短链接";
             input_parseUrl.Size = new Size(337, 46);
@@ -572,7 +637,7 @@
             // button_parseUrl
             // 
             button_parseUrl.JoinLeft = true;
-            button_parseUrl.Location = new Point(349, 93);
+            button_parseUrl.Location = new Point(349, 85);
             button_parseUrl.Name = "button_parseUrl";
             button_parseUrl.Size = new Size(96, 46);
             button_parseUrl.TabIndex = 34;
@@ -597,7 +662,7 @@
             button_qrcodeShortUrl.IconSvg = resources.GetString("button_qrcodeShortUrl.IconSvg");
             button_qrcodeShortUrl.JoinLeft = true;
             button_qrcodeShortUrl.JoinRight = true;
-            button_qrcodeShortUrl.Location = new Point(628, 786);
+            button_qrcodeShortUrl.Location = new Point(614, 813);
             button_qrcodeShortUrl.Name = "button_qrcodeShortUrl";
             button_qrcodeShortUrl.Size = new Size(46, 46);
             button_qrcodeShortUrl.TabIndex = 39;
@@ -609,7 +674,7 @@
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1305, 839);
+            ClientSize = new Size(1305, 939);
             Controls.Add(button_qrcodeShortUrl);
             Controls.Add(panel3);
             Controls.Add(button_copyShortUrl);
@@ -628,6 +693,7 @@
             Name = "Form1";
             Resizable = false;
             Text = "订阅转换工具";
+            FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             windowBar1.ResumeLayout(false);
             panel1.ResumeLayout(false);
@@ -687,5 +753,10 @@
         private AntdUI.Alert alert1;
         private AntdUI.Button button_github;
         private AntdUI.Button button_qrcodeShortUrl;
+        private AntdUI.Label label15;
+        private AntdUI.Button button_subServerTest;
+        private AntdUI.Button button_subServerStart;
+        private AntdUI.Button button_subServerStop;
+        private AntdUI.Alert alert_subServerStatus;
     }
 }
