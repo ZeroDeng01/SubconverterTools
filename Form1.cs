@@ -132,6 +132,7 @@ namespace SubconverterTools
 
             if (input_sourceSubUrl.Text.Trim() == string.Empty)
             {
+                input_sourceSubUrl.Status = TType.Error;
                 AntdUI.Modal.open(new AntdUI.Modal.Config(this, "参数不完整", "订阅/代理连接必填", AntdUI.TType.Warn)
                 {
                     CancelText = null,
@@ -139,8 +140,10 @@ namespace SubconverterTools
                 });
                 return false;
             }
+            input_sourceSubUrl.Status = TType.None;
             if (select_clientType.SelectedIndex < 0)
             {
+                select_clientType.Status = TType.Error;
                 AntdUI.Modal.open(new AntdUI.Modal.Config(this, "参数不完整", "客户端类型必填", AntdUI.TType.Warn)
                 {
                     CancelText = null,
@@ -148,9 +151,10 @@ namespace SubconverterTools
                 });
                 return false;
             }
-
+            select_clientType.Status = TType.None;
             if (select_customBackend.SelectedIndex < 0)
             {
+                select_customBackend.Status = TType.Error;
                 AntdUI.Modal.open(new AntdUI.Modal.Config(this, "参数不完整", "后端服务器必填", AntdUI.TType.Warn)
                 {
                     CancelText = null,
@@ -158,6 +162,7 @@ namespace SubconverterTools
                 });
                 return false;
             }
+            select_customBackend.Status = TType.None;
             return true;
         }
 
@@ -194,6 +199,7 @@ namespace SubconverterTools
             {
                 if (input_subUrl.Text == string.Empty)
                 {
+                    input_subUrl.Status = TType.Error;
                     AntdUI.Modal.open(new AntdUI.Modal.Config(this, "短链接生成失败", "订阅链接还未生成，请先生成订阅链接", AntdUI.TType.Warn)
                     {
                         CancelText = null,
@@ -201,7 +207,7 @@ namespace SubconverterTools
                     });
                     return;
                 }
-
+                input_subUrl.Status = TType.None;
                 string shortUrl = await ShortURL.Short(input_subUrl.Text, select_shortUrlBackend.SelectedValue.ToString());
 
                 if (shortUrl != null)
