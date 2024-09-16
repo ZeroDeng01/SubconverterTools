@@ -22,8 +22,6 @@ namespace SubconverterTools
         {
             InitializeComponent();
             _subBackend = new SubBackend();
-            _subBackend.OutputDataReceived += SubBackend_OutputDataReceived;
-            _subBackend.ErrorDataReceived += SubBackend_ErrorDataReceived;
 
             select_clientType.Items.AddRange(BaseData.ClientTypes.GetItem().ToArray());
             select_clientType.SelectedIndex = 0;
@@ -72,14 +70,21 @@ namespace SubconverterTools
             // 文件名称
             if (input_filename.Text.Length > 0)
             {
-                customSubUrl +=(
-                  "&filename=" + Uri.EscapeDataString(input_filename.Text)
-                 +"&group="+ Uri.EscapeDataString(input_filename.Text)
-                 +"&remarks=" + Uri.EscapeDataString(input_filename.Text)
-                 );
-                    
-            }
+                customSubUrl += "&filename=" + Uri.EscapeDataString(input_filename.Text);
 
+            }
+            // 分组
+            if (input_group.Text.Length > 0)
+            {
+                customSubUrl += "&group=" + Uri.EscapeDataString(input_group.Text);
+
+            }
+            // 备注
+            if (input_remarks.Text.Length > 0)
+            {
+                customSubUrl += "&remarks=" + Uri.EscapeDataString(input_remarks.Text);
+
+            }
 
             // check bool类型配置
             customSubUrl +=
@@ -91,15 +96,13 @@ namespace SubconverterTools
             "&fdn=" + checkbox_fdn.Checked.ToString().ToLower() +
             "&expand=" + checkbox_expand.Checked.ToString().ToLower() +
             "&sort=" + checkbox_sort.Checked.ToString().ToLower() +
-            "&udp=" + checkbox_udp.Checked.ToString().ToLower();
+            "&udp=" + checkbox_udp.Checked.ToString().ToLower() +
+            "&append_info=" + checkbox_appendInfo.Checked.ToString().ToLower();
 
-            if (checkbox_surgeDoh.Checked)
+
+            if (checkbox_clashDNS.Checked)
             {
-                customSubUrl += "&surge.doh=true";
-            }
-            if (checkbox_clashDoh.Checked)
-            {
-                customSubUrl += "&clash.doh=true";
+                customSubUrl += "&clash.dns.super=true";
             }
             input_subUrl.Text = customSubUrl;
 
@@ -278,12 +281,26 @@ namespace SubconverterTools
                 });
                 return;
             }
-
-            button_parseUrl.Loading = true;
             var inputUrl = input_parseUrl.Text;
 
+
             // 解析URL
-            var uri = new Uri(inputUrl);
+            Uri uri = null;
+            try
+            {
+                uri = new Uri(inputUrl);
+            }
+            catch (Exception EE)
+            {
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "解析失败", "URL解析失败，请填入正确的订阅链接", AntdUI.TType.Warn)
+                {
+                    CancelText = null,
+                    OkText = "知道了"
+                });
+                return;
+            }
+
+            button_parseUrl.Loading = true;
             // 提取基础 URL
             var customBackend = uri.GetLeftPart(UriPartial.Path);
             select_customBackend.SelectedValue = customBackend + "?";
@@ -292,7 +309,7 @@ namespace SubconverterTools
 
             // 从查询参数中获取值并更新控件
             select_clientType.SelectedValue = queryParams["target"];
-            input_sourceSubUrl.Text = Uri.UnescapeDataString(queryParams["url"]);
+            input_sourceSubUrl.Text = Uri.UnescapeDataString(queryParams["url"] ?? string.Empty).Replace("||", "\r\n");
 
             // 解析可选参数
             if (queryParams["config"] != null)
@@ -302,6 +319,8 @@ namespace SubconverterTools
             input_excludeRemarks.Text = Uri.UnescapeDataString(queryParams["exclude"] ?? string.Empty);
             input_includeRemarks.Text = Uri.UnescapeDataString(queryParams["include"] ?? string.Empty);
             input_filename.Text = Uri.UnescapeDataString(queryParams["filename"] ?? string.Empty);
+            input_group.Text = Uri.UnescapeDataString(queryParams["group"] ?? string.Empty);
+            input_remarks.Text = Uri.UnescapeDataString(queryParams["remarks"] ?? string.Empty);
 
             // 解析布尔类型参数
             checkbox_appendType.Checked = bool.TryParse(queryParams["append_type"], out bool appendTypeValue) && appendTypeValue;
@@ -313,10 +332,10 @@ namespace SubconverterTools
             checkbox_expand.Checked = bool.TryParse(queryParams["expand"], out bool expandValue) && expandValue;
             checkbox_sort.Checked = bool.TryParse(queryParams["sort"], out bool sortValue) && sortValue;
             checkbox_udp.Checked = bool.TryParse(queryParams["udp"], out bool udpValue) && udpValue;
+            checkbox_appendInfo.Checked = bool.TryParse(queryParams["append_info"], out bool appendInfoValue) && appendInfoValue;
 
-            // 解析额外的DOH参数
-            checkbox_surgeDoh.Checked = queryParams["surge.doh"] == "true";
-            checkbox_clashDoh.Checked = queryParams["clash.doh"] == "true";
+            // Clash高级DNS设置
+            checkbox_clashDNS.Checked = queryParams["clash.dns.super"] == "true";
             button_parseUrl.Loading = false;
         }
 
@@ -401,39 +420,21 @@ namespace SubconverterTools
             AntdUI.Message.info(this, "后端停止指令已经发送", Font);
         }
 
-        /// <summary>
-        /// 后端服务错误消息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SubBackend_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("后端异常：" + e.Data);
-            if (!string.IsNullOrEmpty(e.Data))
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// 后端服务运行日志
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SubBackend_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("后端异常：" + e.Data);
-            if (!string.IsNullOrEmpty(e.Data))
-            {
-
-            }
-        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_subBackend.IsRunning)
             {
                 _subBackend.Stop();
+            }
+        }
+
+        private void button_log_Click(object sender, EventArgs e)
+        {
+            if (_subBackend.IsRunning)
+            {
+                BackendLogForm logForm = new BackendLogForm(_subBackend);
+                logForm.Show();
             }
         }
     }
