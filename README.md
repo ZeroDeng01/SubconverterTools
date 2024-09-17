@@ -18,14 +18,21 @@
 ## 特性
 
 - 支持多种协议完美适配[tindy2013/subconverter](https://github.com/tindy2013/subconverter)
-- 内置二维码服务，移动端使用直接扫码即可
-- 内置订阅转换后端服务（[tindy2013/subconverter](https://github.com/tindy2013/subconverter)），一键启动，无复杂配置，纯本地运行，数据安全有保障
+- 内置`二维码服务`，移动端使用直接扫码即可
+- `内置订阅转换后端`服务（[tindy2013/subconverter](https://github.com/tindy2013/subconverter)），一键启动，无复杂配置，纯本地运行，数据安全有保障
+- 定制化`Clash(R) ` `DNS`优化方案
 
 ## 截图
 
-![运行截图](https://image-markdown-s3.zerodeng.net/2024/09/c49fa0891a5569df01861bad1e0b00af.png)
+#### 主界面
 
+![image-20240917135009731](https://image-markdown-s3.zerodeng.net/2024/09/dd38f77b4e0d11dd370130685c4b3f70.png)
 
+#### 内置后端服务
+
+![image-20240917135131252](https://image-markdown-s3.zerodeng.net/2024/09/35608239f232d218b9e6c86670819462.png)
+
+![image-20240917135421328](https://image-markdown-s3.zerodeng.net/2024/09/4fac67bda9374b7d0ff6d92c8924eddc.png)
 
 ## 支持转换类型
 
