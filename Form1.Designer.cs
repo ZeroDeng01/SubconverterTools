@@ -64,9 +64,9 @@
             label7 = new AntdUI.Label();
             input_subUrl = new AntdUI.Input();
             panel2 = new AntdUI.Panel();
+            label_backendVersion = new AntdUI.Label();
             label12 = new AntdUI.Label();
             select_shortUrlBackend = new AntdUI.Select();
-            label_backendVersion = new AntdUI.Label();
             label11 = new AntdUI.Label();
             label9 = new AntdUI.Label();
             label10 = new AntdUI.Label();
@@ -440,10 +440,10 @@
             // panel2
             // 
             panel2.BorderWidth = 1F;
+            panel2.Controls.Add(label_backendVersion);
             panel2.Controls.Add(select_remoteConfig);
             panel2.Controls.Add(label12);
             panel2.Controls.Add(select_shortUrlBackend);
-            panel2.Controls.Add(label_backendVersion);
             panel2.Controls.Add(label11);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(input_sourceSubUrl);
@@ -462,6 +462,15 @@
             panel2.TabIndex = 29;
             panel2.Text = "panel2";
             // 
+            // label_backendVersion
+            // 
+            label_backendVersion.Location = new Point(208, 457);
+            label_backendVersion.Name = "label_backendVersion";
+            label_backendVersion.Size = new Size(574, 30);
+            label_backendVersion.TabIndex = 14;
+            label_backendVersion.Text = "";
+            label_backendVersion.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // label12
             // 
             label12.Font = new Font("Microsoft YaHei UI", 10F);
@@ -479,15 +488,6 @@
             select_shortUrlBackend.PlaceholderText = "请选择短链接服务器";
             select_shortUrlBackend.Size = new Size(778, 45);
             select_shortUrlBackend.TabIndex = 16;
-            // 
-            // label_backendVersion
-            // 
-            label_backendVersion.Location = new Point(465, 457);
-            label_backendVersion.Name = "label_backendVersion";
-            label_backendVersion.Size = new Size(317, 30);
-            label_backendVersion.TabIndex = 14;
-            label_backendVersion.Text = "";
-            label_backendVersion.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label11
             // 
@@ -727,6 +727,7 @@
             // 
             // Form1
             // 
+            AutoHandDpi = false;
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
