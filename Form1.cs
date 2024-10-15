@@ -26,7 +26,7 @@ namespace SubconverterTools
             select_clientType.Items.AddRange(BaseData.ClientTypes.GetItem().ToArray());
             select_clientType.SelectedIndex = 0;
             select_customBackend.Items.AddRange(BaseData.CustomBackends.GetItem().ToArray());
-            select_customBackend.SelectedIndex = 0;
+            select_customBackend.SelectedIndex = 1;
             select_remoteConfig.Items.AddRange(BaseData.RemoteConfigs.GetItem().ToArray());
             select_remoteConfig.SelectedIndex = 0;
             select_shortUrlBackend.Items.AddRange(BaseData.ShortUrlBackends.GetItem().ToArray());
@@ -45,9 +45,20 @@ namespace SubconverterTools
             #region 参数构造
             var sourceSub = input_sourceSubUrl.Text;
             sourceSub = Regex.Replace(sourceSub, @"(\n|\r|\r\n)", "|");//订阅连接
-            customSubUrl = select_customBackend.SelectedValue + //添加后端服务器
-                "target=" + select_clientType.SelectedValue +  //添加客户端类型
+            customSubUrl = "target=" + select_clientType.SelectedValue +  //添加客户端类型
                 "&url=" + Uri.EscapeDataString(sourceSub);
+            if (select_customBackend.SelectedIndex == 0)
+            {
+                if (select_customBackend.Text.EndsWith("/"))
+                {
+                    select_customBackend.Text = select_customBackend.Text.Substring(0, select_customBackend.Text.Length - 1);
+                }
+                customSubUrl = select_customBackend.Text + "/sub?" + customSubUrl; //添加自定义后端服务器
+            }
+            else
+            {
+                customSubUrl = select_customBackend.SelectedValue + customSubUrl; //添加后端服务器
+            }
 
             // 远程配置
             if (select_remoteConfig.SelectedIndex > -1)
@@ -155,16 +166,33 @@ namespace SubconverterTools
                 return false;
             }
             select_clientType.Status = TType.None;
+
+            if (select_customBackend.SelectedIndex == 0)
+            {
+                if ((!select_customBackend.Text.ToLower().StartsWith("http://") && !select_customBackend.Text.ToLower().StartsWith("https://")))
+                {
+                    select_customBackend.Status = TType.Error;
+                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "参数不完整", "后端服务器必填,请输入正确的后端服务器地址", AntdUI.TType.Warn)
+                    {
+                        CancelText = null,
+                        OkText = "知道了"
+                    });
+                    return false;
+                }
+            }
+
             if (select_customBackend.SelectedIndex < 0)
             {
                 select_customBackend.Status = TType.Error;
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "参数不完整", "后端服务器必填", AntdUI.TType.Warn)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "参数不完整", "后端服务器必填，请选择后端服务器地址", AntdUI.TType.Warn)
                 {
                     CancelText = null,
                     OkText = "知道了"
                 });
                 return false;
             }
+
+
             select_customBackend.Status = TType.None;
             return true;
         }
@@ -435,6 +463,13 @@ namespace SubconverterTools
             {
                 BackendLogForm logForm = new BackendLogForm(_subBackend);
                 logForm.Show();
+            }
+        }
+
+        private void select_customBackend_TextChanged(object sender, EventArgs e)
+        {
+            if (select_customBackend.Text.Length < 1) {
+                select_customBackend.SelectedIndex = 0;
             }
         }
     }
