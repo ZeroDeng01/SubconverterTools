@@ -729,10 +729,10 @@
             // 
             alert1.Font = new Font("Microsoft YaHei UI", 7F);
             alert1.Icon = AntdUI.TType.Warn;
-            alert1.Location = new Point(149, 8);
+            alert1.Location = new Point(122, 8);
             alert1.Margin = new Padding(2, 3, 2, 3);
             alert1.Name = "alert1";
-            alert1.Size = new Size(191, 44);
+            alert1.Size = new Size(218, 50);
             alert1.TabIndex = 37;
             alert1.Text = "实验性功能可能工作不稳定";
             alert1.TextTitle = "提示";
