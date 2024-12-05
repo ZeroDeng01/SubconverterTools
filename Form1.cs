@@ -123,6 +123,7 @@ namespace SubconverterTools
                 OnBtns = btn =>
                 {
                     Copy(customSubUrl);
+                    return true;
                 },
                 CancelText = null,
                 OkText = "知道了"
@@ -203,8 +204,22 @@ namespace SubconverterTools
         /// <param name="text"></param>
         private void Copy(string text)
         {
-            Clipboard.SetText(text);
-            AntdUI.Message.success(this, "复制成功", Font);
+            // 确保在UI线程上执行
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Copy(text)));
+                return;
+            }
+
+            try
+            {
+                Clipboard.SetText(text);
+                AntdUI.Message.success(this, "复制成功", Font);
+            }
+            catch (Exception ex)
+            {
+                AntdUI.Message.error(this, "复制失败: " + ex.Message, Font);
+            }
         }
         private void button_copySubUrl_Click(object sender, EventArgs e)
         {
@@ -250,6 +265,7 @@ namespace SubconverterTools
                         OnBtns = btn =>
                         {
                             Copy(shortUrl);
+                            return true;
                         },
                         CancelText = null,
                         OkText = "知道了"
@@ -263,6 +279,7 @@ namespace SubconverterTools
                         OnBtns = btn =>
                         {
                             Copy(ShortURL.requestUrl);
+                            return true;
                         },
                         CancelText = null,
                         OkText = "知道了"
@@ -278,6 +295,7 @@ namespace SubconverterTools
                     OnBtns = btn =>
                     {
                         Copy(ShortURL.requestUrl);
+                        return true;
                     },
                     CancelText = null,
                     OkText = "知道了"
