@@ -24,7 +24,7 @@ namespace SubconverterTools.BaseData
                 new SelectItem("ACL4SSR"){ Enable=false},
 
                 new SelectItem("ACL4SSR_Online 默认版 分组比较全(与Github同步)", "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini"),
-                new SelectItem("[个人定制]ACL4SSR_Online_Full_NoCountry 无国家分类", "https://raw.githubusercontent.com/ZeroDeng01/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full%20_NoCountry.ini"),
+                new SelectItem("[个人定制]ACL4SSR_Online_Full_NoCountry 无国家分类", "https://raw.githubusercontent.com/ZeroDeng01/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full_NoCountry.ini"),
                 new SelectItem("ACL4SSR_Online_AdblockPlus 更多去广告(与Github同步)", "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_AdblockPlus.ini"),
                 new SelectItem("ACL4SSR_Online_Full 全分组 重度用户使用(与Github同步)", "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full.ini"),
                 new SelectItem("ACL4SSR_Online_Full_AdblockPlus 全分组 重度用户使用 更多去广告(与Github同步)", "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini"),
